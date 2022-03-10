@@ -1,18 +1,20 @@
 namespace Broooms.Catalog.Core.Entities;
 
-public class Product
+public class Product : Entity<Guid>
 {
     protected Product() { }
 
     public Product(
+        Guid id,
         string name,
         string description,
         uint priceInCents,
         int quantity,
-        string imageUrl
+        string imageUrl,
+        ICollection<Category> categories = null
     )
     {
-        this.Id = Guid.NewGuid();
+        this.Id = id;
         this.Name = name;
         this.Description = description;
         this.PriceInCents = priceInCents;
@@ -20,20 +22,25 @@ public class Product
         this.ImageUrl = imageUrl;
         this.CreatedAt = DateTime.UtcNow;
         this.UpdatedAt = DateTime.UtcNow;
+        this.Categories = categories ?? new List<Category>();
     }
 
-    public bool AddCategory(Category category)
+    public Product AddCategory(Category category)
     {
         if (this.Categories.Contains(category))
         {
-            return false;
+            return this;
         }
 
         this.Categories.Add(category);
-        return true;
+        return this;
     }
 
-    public bool RemoveCategory(Category category) => this.Categories.Remove(category);
+    public Product RemoveCategory(Category category)
+    {
+        this.Categories.Remove(category);
+        return this;
+    }
 
     public void AddStock(int quantity) => this.Quantity += quantity;
 
@@ -53,15 +60,11 @@ public class Product
         this.UpdatedAt = DateTime.UtcNow;
     }
 
-    public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
     public uint PriceInCents { get; private set; }
     public int Quantity { get; private set; }
     public string ImageUrl { get; private set; }
 
-    public DateTime CreatedAt { get; private set; }
-    public DateTime UpdatedAt { get; private set; }
-
-    public ICollection<Category> Categories { get; private set; } = new List<Category>();
+    public ICollection<Category> Categories { get; private set; }
 }
