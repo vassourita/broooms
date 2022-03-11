@@ -46,25 +46,19 @@ public class Product : Entity<Guid>
 
     public void RemoveStock(int quantity = 1) => this.Quantity -= quantity;
 
-    public void Update(
-        string name = null,
-        string description = null,
-        uint priceInCents = 0,
-        string imageUrl = null
-    )
+    public void Update(string name = null, string description = null, uint priceInCents = 0)
     {
         this.Name = name ?? this.Name;
         this.Description = description ?? this.Description;
         this.PriceInCents = priceInCents > 0 ? priceInCents : this.PriceInCents;
-        this.ImageUrl = imageUrl ?? this.ImageUrl;
         this.UpdatedAt = DateTime.UtcNow;
     }
 
-    public string Name { get; private set; }
-    public string Description { get; private set; }
-    public uint PriceInCents { get; private set; }
-    public int Quantity { get; private set; }
-    public string ImageUrl { get; private set; }
+    public string Name { get; protected set; }
+    public string Description { get; protected set; }
+    public uint PriceInCents { get; protected set; }
+    public int Quantity { get; protected set; }
+    public string ImageUrl { get; protected set; }
 
-    public ICollection<Category> Categories { get; private set; }
+    public ICollection<Category> Categories { get; protected set; }
 }

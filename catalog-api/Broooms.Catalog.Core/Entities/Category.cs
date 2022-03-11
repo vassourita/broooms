@@ -11,8 +11,8 @@ public class Category : Entity<Guid>
         this.UpdatedAt = DateTime.UtcNow;
     }
 
-    public string Name { get; private set; }
-    public string Description { get; private set; }
+    public string Name { get; protected set; }
+    public string Description { get; protected set; }
 
-    public ICollection<Product> Products { get; private set; } = new List<Product>();
+    public ICollection<Product> Products { get; protected set; } = new List<Product>();
 }
