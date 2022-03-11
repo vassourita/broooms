@@ -8,6 +8,7 @@ services:
       - broooms_catalog_db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=localhost;Database=catalog_db;User Id=docker;Password=docker;Port=5101"
     ports:
       - "4101:80"
       - "4102:443"
