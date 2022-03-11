@@ -6,4 +6,6 @@ public interface IRepository<T, TId>
     Task<T> AddAsync(T entity);
     Task<T> UpdateAsync(T entity);
     Task RemoveAsync(TId id);
+
+    IUnitOfWork UnitOfWork { get; }
 }

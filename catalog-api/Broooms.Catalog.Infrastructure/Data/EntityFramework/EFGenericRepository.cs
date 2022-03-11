@@ -5,17 +5,20 @@ using Broooms.Catalog.Core.Data;
 using Broooms.Catalog.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class EFGenericRepository<T, TId> : IRepository<T, TId>, IUnitOfWork
+public class EFGenericRepository<T, TId> : IRepository<T, TId>
     where T : Entity<TId>
     where TId : struct
 {
     protected CatalogDataContext Context { get; private set; }
     protected DbSet<T> DbSet { get; private set; }
 
+    public IUnitOfWork UnitOfWork { get; private set; }
+
     public EFGenericRepository(CatalogDataContext context)
     {
         this.Context = context;
         this.DbSet = this.Context.Set<T>();
+        this.UnitOfWork = context;
     }
 
     public Task<T> AddAsync(T entity)
@@ -41,8 +44,4 @@ public class EFGenericRepository<T, TId> : IRepository<T, TId>, IUnitOfWork
         this.DbSet.Update(entity);
         return Task.FromResult(entity);
     }
-
-    public Task RollbackAsync() => Task.CompletedTask;
-
-    public Task CommitAsync() => this.Context.SaveChangesAsync();
 }

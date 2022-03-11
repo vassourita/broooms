@@ -9,17 +9,11 @@ public class ProductService
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public ProductService(
-        IProductRepository productRepository,
-        IMapper mapper,
-        IUnitOfWork unitOfWork
-    )
+    public ProductService(IProductRepository productRepository, IMapper mapper)
     {
         this._productRepository = productRepository;
         this._mapper = mapper;
-        this._unitOfWork = unitOfWork;
     }
 
     public async Task<IEnumerable<Product>> FindByFiltersAsync(ProductSearchDto filters)
@@ -27,12 +21,12 @@ public class ProductService
         try
         {
             var entities = await this._productRepository.FindByFiltersAsync(filters);
-            await this._unitOfWork.CommitAsync();
+            await this._productRepository.UnitOfWork.CommitAsync();
             return entities;
         }
         catch (Exception)
         {
-            await this._unitOfWork.RollbackAsync();
+            await this._productRepository.UnitOfWork.RollbackAsync();
             return null;
         }
     }
@@ -42,42 +36,52 @@ public class ProductService
         try
         {
             var entity = await this._productRepository.FindByIdAsync(id);
-            await this._unitOfWork.CommitAsync();
+            await this._productRepository.UnitOfWork.CommitAsync();
             return entity;
         }
         catch (Exception)
         {
-            await this._unitOfWork.RollbackAsync();
+            await this._productRepository.UnitOfWork.RollbackAsync();
             return null;
         }
     }
 
-    public async Task<Product> CreateAsync(ProductDto dto)
+    public async Task<Product> CreateAsync(ProductCreateDto dto)
     {
         try
         {
             var entity = await this._productRepository.AddAsync(this._mapper.Map<Product>(dto));
-            await this._unitOfWork.CommitAsync();
+            await this._productRepository.UnitOfWork.CommitAsync();
             return entity;
         }
         catch (Exception)
         {
-            await this._unitOfWork.RollbackAsync();
+            await this._productRepository.UnitOfWork.RollbackAsync();
             return null;
         }
     }
 
-    public async Task<Product> UpdateAsync(ProductDto dto)
+    public async Task<Product> UpdateAsync(ProductUpdateDto dto)
     {
         try
         {
-            var entity = await this._productRepository.UpdateAsync(this._mapper.Map<Product>(dto));
-            await this._unitOfWork.CommitAsync();
-            return entity;
+            var actual = await this._productRepository.FindByIdAsync(dto.Id);
+            if (actual == null)
+            {
+                return null;
+            }
+            actual.Update(
+                name: dto.Name,
+                description: dto.Description,
+                priceInCents: dto.PriceInCents
+            );
+            var updated = await this._productRepository.UpdateAsync(actual);
+            await this._productRepository.UnitOfWork.CommitAsync();
+            return updated;
         }
         catch (Exception)
         {
-            await this._unitOfWork.RollbackAsync();
+            await this._productRepository.UnitOfWork.RollbackAsync();
             return null;
         }
     }
@@ -87,11 +91,11 @@ public class ProductService
         try
         {
             await this._productRepository.RemoveAsync(id);
-            await this._unitOfWork.CommitAsync();
+            await this._productRepository.UnitOfWork.CommitAsync();
         }
         catch (Exception)
         {
-            await this._unitOfWork.RollbackAsync();
+            await this._productRepository.UnitOfWork.RollbackAsync();
         }
     }
 }

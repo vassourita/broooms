@@ -1,9 +1,11 @@
 namespace Broooms.Catalog.Infrastructure.Data.EntityFramework;
 
+using System.Threading.Tasks;
+using Broooms.Catalog.Core.Data;
 using Broooms.Catalog.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class CatalogDataContext : DbContext
+public class CatalogDataContext : DbContext, IUnitOfWork
 {
     public CatalogDataContext(DbContextOptions<CatalogDataContext> options) : base(options) { }
 
@@ -59,6 +61,10 @@ public class CatalogDataContext : DbContext
             }
         );
     }
+
+    public Task CommitAsync() => this.SaveChangesAsync();
+
+    public Task RollbackAsync() => Task.CompletedTask;
 
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
