@@ -1,5 +1,6 @@
 namespace Broooms.Catalog.Data;
 
+using Broooms.Catalog.Categories;
 using Broooms.Catalog.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,4 +15,5 @@ public class DataContext : DbContext
     }
 
     public DbSet<Product> Products { get; set; }
+    public DbSet<Category> Categories { get; set; }
 }

@@ -21,7 +21,7 @@ public class ProductStockController : ControllerBase
     /// <param name="id">The product id.</param>
     /// <param name="dto">How much items should be added or removed from stock.</param>
     /// <returns>A 200 response with the found product or a 404 empty response if it was not found.</returns>
-    [HttpPut("{id}/stock")]
+    [HttpPut("{id:guid}/stock")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Index(

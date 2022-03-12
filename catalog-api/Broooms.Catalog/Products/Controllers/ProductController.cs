@@ -61,7 +61,7 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <param name="id">The product id.</param>
     /// <returns>A 200 response with the found product or a 404 empty response if it was not found.</returns>
-    [HttpGet("{id}", Name = "GetProductById")]
+    [HttpGet("{id:guid}", Name = "GetProductById")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -114,7 +114,7 @@ public class ProductController : ControllerBase
     /// <param name="id">The product id.</param>
     /// <param name="dto">What should be updated in the product.</param>
     /// <returns>A 200 response with the found product or a 404 empty response if it was not found.</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -143,7 +143,7 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <param name="id">The product id.</param>
     /// <returns>A 204 response if the delete succeeded or a 404 empty response if the product was not found.</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
