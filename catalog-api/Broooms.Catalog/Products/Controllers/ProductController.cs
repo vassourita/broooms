@@ -45,6 +45,7 @@ public class ProductController : ControllerBase
         var totalItems = await query.CountAsync();
 
         var items = await query
+            .Include(x => x.Categories)
             .Skip((search.Page - 1) * search.PageSize)
             .Take(search.PageSize)
             .ToListAsync();
@@ -130,9 +131,9 @@ public class ProductController : ControllerBase
         {
             return NotFound();
         }
-        productToUpdate.Name = dto.Name;
-        productToUpdate.Description = dto.Description;
-        productToUpdate.Price = dto.Price;
+        productToUpdate.Name = dto.Name ?? productToUpdate.Name;
+        productToUpdate.Description = dto.Description ?? productToUpdate.Description;
+        productToUpdate.Price = dto.Price == 0 ? productToUpdate.Price : dto.Price;
         _dataContext.Update(productToUpdate);
         await _dataContext.SaveChangesAsync();
         return Ok(productToUpdate);

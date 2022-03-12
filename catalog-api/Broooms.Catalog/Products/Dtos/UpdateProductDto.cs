@@ -10,5 +10,5 @@ public class UpdateProductDto
     [MaxLength(1000)]
     public string Description { get; set; }
 
-    public decimal Price { get; set; }
+    public decimal Price { get; set; } = 0;
 }

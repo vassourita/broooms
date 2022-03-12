@@ -31,7 +31,7 @@ public class CategoryController : ControllerBase
             return BadRequest(new { Errors = ModelState.SelectMany(x => x.Value.Errors) });
         }
 
-        var items = await _dataContext.Categories.ToListAsync();
+        var items = await _dataContext.Categories.IgnoreAutoIncludes().ToListAsync();
 
         Response.Headers.Add(
             "X-Total-Count",
@@ -107,8 +107,8 @@ public class CategoryController : ControllerBase
         {
             return NotFound();
         }
-        categoryToUpdate.Name = dto.Name;
-        categoryToUpdate.Description = dto.Description;
+        categoryToUpdate.Name = dto.Name ?? categoryToUpdate.Name;
+        categoryToUpdate.Description = dto.Description ?? categoryToUpdate.Description;
         _dataContext.Update(categoryToUpdate);
         await _dataContext.SaveChangesAsync();
         return Ok(categoryToUpdate);
