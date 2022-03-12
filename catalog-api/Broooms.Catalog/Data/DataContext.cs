@@ -16,4 +16,35 @@ public class DataContext : DbContext
 
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Product>(
+            table =>
+            {
+                table.ToTable("Products");
+
+                table
+                    .HasMany(x => x.Categories)
+                    .WithMany(x => x.Products)
+                    .UsingEntity("ProductCategory");
+            }
+        );
+
+        modelBuilder.Entity<Category>(
+            table =>
+            {
+                table.ToTable("Categories");
+
+                table.Property(x => x.Id).UseSerialColumn();
+
+                table
+                    .HasMany(x => x.Products)
+                    .WithMany(x => x.Categories)
+                    .UsingEntity("ProductCategories");
+            }
+        );
+    }
 }

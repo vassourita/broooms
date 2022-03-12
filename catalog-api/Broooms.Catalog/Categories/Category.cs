@@ -1,6 +1,7 @@
 namespace Broooms.Catalog.Categories;
 
 using System.ComponentModel.DataAnnotations;
+using Broooms.Catalog.Products;
 
 public class Category
 {
@@ -14,4 +15,6 @@ public class Category
     [Required]
     [MaxLength(200)]
     public string Description { get; set; }
+
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 }

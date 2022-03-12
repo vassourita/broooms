@@ -8,7 +8,7 @@ using Broooms.Catalog.Categories.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-[Route("api/v1/Categories")]
+[Route("api/v1/categories")]
 [ApiController]
 public class CategoryController : ControllerBase
 {
