@@ -42,6 +42,11 @@ public class ProductController : ControllerBase
             );
         }
 
+        if (search.CategoryId > 0)
+        {
+            query = query.Where(x => x.Categories.Any(c => c.Id == search.CategoryId));
+        }
+
         var totalItems = await query.CountAsync();
 
         var items = await query
