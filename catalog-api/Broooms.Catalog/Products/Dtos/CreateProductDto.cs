@@ -1,23 +1,20 @@
-namespace Broooms.Catalog.Products;
+namespace Broooms.Catalog.Products.Dtos;
 
 using System.ComponentModel.DataAnnotations;
 
-public class Product
+public class CreateProductDto
 {
-    [Key]
-    public Guid Id { get; set; }
-
     [Required]
+    [MaxLength(100)]
     public string Name { get; set; }
 
     [Required]
+    [MaxLength(1000)]
     public string Description { get; set; }
 
     [Required]
     public decimal Price { get; set; }
 
     [Required]
-    public int Quantity { get; protected set; }
-
-    public string ImageUrl { get; set; }
+    public int Quantity { get; set; }
 }
