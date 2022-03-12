@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+  azurite:
+    container_name: azurite_dev
+    restart: always
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+    volumes:
+      - /data
 
   broooms.catalog.db:
     container_name: broooms_catalog_db
