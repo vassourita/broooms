@@ -1,3 +1,4 @@
+#pragma warning disable CA1304
 namespace Broooms.Catalog.Products.Controllers;
 
 using Broooms.Catalog.Data;
@@ -7,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
 [ApiController]
-public class NameController : ControllerBase
+public class ProductsController : ControllerBase
 {
     private readonly DataContext _dataContext;
 
-    public NameController(DataContext dataContext) => _dataContext = dataContext;
+    public ProductsController(DataContext dataContext) => _dataContext = dataContext;
 
     /// <summary>
     /// Gets all products within the given page, page size and query.
@@ -21,13 +22,17 @@ public class NameController : ControllerBase
     [HttpGet]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Index(SearchProductDto search)
+    public async Task<IActionResult> Index([FromQuery] SearchProductDto search)
     {
         var query = _dataContext.Products.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search.Query))
         {
-            query = query.Where(x => x.Name.Contains(search.Query));
+            query = query.Where(
+                x =>
+                    x.Name.ToLower().Contains(search.Query.ToLower())
+                    || x.Description.ToLower().Contains(search.Query.ToLower())
+            );
         }
 
         var totalItems = await query.CountAsync();
