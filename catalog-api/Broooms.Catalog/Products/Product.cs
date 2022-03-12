@@ -8,16 +8,19 @@ public class Product
     public Guid Id { get; set; }
 
     [Required]
+    [MaxLength(100)]
     public string Name { get; set; }
 
     [Required]
+    [MaxLength(1000)]
     public string Description { get; set; }
 
     [Required]
     public decimal Price { get; set; }
 
     [Required]
-    public int Quantity { get; protected set; }
+    public int Quantity { get; set; }
 
+    [MaxLength(300)]
     public string ImageUrl { get; set; }
 }
