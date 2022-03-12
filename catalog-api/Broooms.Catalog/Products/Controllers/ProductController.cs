@@ -1,18 +1,20 @@
 #pragma warning disable CA1304
+
 namespace Broooms.Catalog.Products.Controllers;
 
 using Broooms.Catalog.Data;
+using Broooms.Catalog.Data.Validation;
 using Broooms.Catalog.Products.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-[Route("api/[controller]")]
+[Route("api/v1/products")]
 [ApiController]
-public class ProductsController : ControllerBase
+public class ProductController : ControllerBase
 {
     private readonly DataContext _dataContext;
 
-    public ProductsController(DataContext dataContext) => _dataContext = dataContext;
+    public ProductController(DataContext dataContext) => _dataContext = dataContext;
 
     /// <summary>
     /// Gets all products within the given page, page size and query.
@@ -21,9 +23,14 @@ public class ProductsController : ControllerBase
     /// <returns>A 200 response with the found products.</returns>
     [HttpGet]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
     public async Task<IActionResult> Index([FromQuery] SearchProductDto search)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new { Errors = ModelState.SelectMany(x => x.Value.Errors) });
+        }
+
         var query = _dataContext.Products.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search.Query))
@@ -60,6 +67,11 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Show([FromRoute] Guid id)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new { Errors = ModelState.ToErrorList() });
+        }
+
         var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.Id == id);
         if (product == null)
         {
@@ -78,6 +90,11 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Product))]
     public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new { Errors = ModelState.ToErrorList() });
+        }
+
         var newProduct = new Product
         {
             Id = Guid.NewGuid(),
@@ -103,6 +120,11 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateProductDto dto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new { Errors = ModelState.ToErrorList() });
+        }
+
         var productToUpdate = await _dataContext.Products.FirstOrDefaultAsync(x => x.Id == id);
         if (productToUpdate == null)
         {
@@ -127,6 +149,11 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Destroy([FromRoute] Guid id)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new { Errors = ModelState.ToErrorList() });
+        }
+
         var productToDelete = await _dataContext.Products.FirstOrDefaultAsync(x => x.Id == id);
         if (productToDelete == null)
         {

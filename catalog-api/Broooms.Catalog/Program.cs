@@ -1,4 +1,5 @@
 using Broooms.Catalog.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -15,6 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(
     options => options.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog API", Version = "v1" })
 );
+builder.Services.Configure<ApiBehaviorOptions>(
+    options => options.SuppressModelStateInvalidFilter = true
+);
 
 var app = builder.Build();
 
@@ -22,7 +26,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
+    app.UseSwaggerUI(
+        options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            options.RoutePrefix = string.Empty;
+        }
+    );
 }
 
 app.UseHttpsRedirection();
