@@ -10,7 +10,7 @@ public class DataContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
         base.OnConfiguring(optionsBuilder);
     }
 

@@ -25,5 +25,5 @@ public class Product
     [MaxLength(300)]
     public string ImageUrl { get; set; }
 
-    public ICollection<Category> Categories { get; set; } = new List<Category>();
+    public List<Category> Categories { get; set; } = new List<Category>();
 }
