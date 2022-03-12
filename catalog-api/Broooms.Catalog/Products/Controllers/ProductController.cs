@@ -49,24 +49,17 @@ public class ProductController : ControllerBase
 
         var totalItems = await query.CountAsync();
 
-        var finishedQuery = query
+        var items = await query
             .Include(x => x.Categories)
             .Skip((search.Page - 1) * search.PageSize)
-            .Take(search.PageSize);
-
-        var totalQueriedItems = await finishedQuery.CountAsync();
-
-        var products = await finishedQuery.ToListAsync();
+            .Take(search.PageSize)
+            .ToListAsync();
 
         Response.Headers.Add(
             "X-Total-Count",
             totalItems.ToString(System.Globalization.CultureInfo.InvariantCulture)
         );
-        Response.Headers.Add(
-            "X-Total-Queried-Count",
-            totalQueriedItems.ToString(System.Globalization.CultureInfo.InvariantCulture)
-        );
-        return Ok(products);
+        return Ok(items);
     }
 
     /// <summary>
