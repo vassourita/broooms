@@ -2,17 +2,6 @@ version: '3.4'
 
 services:
 
-  broooms.catalog.api:
-    container_name: broooms_catalog_api
-    depends_on:
-      - broooms_catalog_db
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=localhost;Database=catalog_db;User Id=docker;Password=docker;Port=5101"
-    ports:
-      - "4101:80"
-      - "4102:443"
-
   broooms.catalog.db:
     container_name: broooms_catalog_db
     restart: always

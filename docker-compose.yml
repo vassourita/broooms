@@ -2,11 +2,5 @@ version: '3.4'
 
 services:
 
-  broooms.catalog.api:
-    image: ${DOCKER_REGISTRY-}brooomscatalogapi
-    build:
-      context: .
-      dockerfile: catalog-api/Broooms.Catalog.Api/Dockerfile
-
   broooms.catalog.db:
     image: postgres:13
