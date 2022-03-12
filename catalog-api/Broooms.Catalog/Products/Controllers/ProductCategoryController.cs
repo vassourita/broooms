@@ -22,7 +22,7 @@ public class ProductCategoryController : ControllerBase
     [HttpPost("{id:guid}/categories/{categoryId:int}")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<IActionResult> Index([FromRoute] Guid id, [FromRoute] int categoryId)
+    public async Task<IActionResult> Create([FromRoute] Guid id, [FromRoute] int categoryId)
     {
         if (!ModelState.IsValid)
         {

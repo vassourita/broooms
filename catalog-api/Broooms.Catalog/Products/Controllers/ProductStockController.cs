@@ -24,7 +24,7 @@ public class ProductStockController : ControllerBase
     [HttpPut("{id:guid}/stock")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Index(
+    public async Task<IActionResult> Update(
         [FromRoute] Guid id,
         [FromBody] UpdateProductStockDto dto
     )
