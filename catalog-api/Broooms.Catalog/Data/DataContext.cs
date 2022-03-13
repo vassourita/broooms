@@ -29,7 +29,7 @@ public class DataContext : DbContext
                 table
                     .HasMany(x => x.Categories)
                     .WithMany(x => x.Products)
-                    .UsingEntity("ProductCategory");
+                    .UsingEntity("ProductCategories");
             }
         );
 

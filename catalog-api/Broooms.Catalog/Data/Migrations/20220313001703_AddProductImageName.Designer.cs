@@ -3,6 +3,7 @@ using System;
 using Broooms.Catalog.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Broooms.Catalog.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220313001703_AddProductImageName")]
+    partial class AddProductImageName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,7 +97,37 @@ namespace Broooms.Catalog.Data.Migrations
                     b.ToTable("ProductCategories");
                 });
 
+            modelBuilder.Entity("ProductCategory", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CategoriesId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("ProductCategory");
+                });
+
             modelBuilder.Entity("ProductCategories", b =>
+                {
+                    b.HasOne("Broooms.Catalog.Categories.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Broooms.Catalog.Products.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductCategory", b =>
                 {
                     b.HasOne("Broooms.Catalog.Categories.Category", null)
                         .WithMany()
