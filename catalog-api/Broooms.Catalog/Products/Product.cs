@@ -22,6 +22,9 @@ public class Product
     [Required]
     public int Quantity { get; set; }
 
+    [MaxLength(100)]
+    public string ImageName { get; set; }
+
     [MaxLength(300)]
     public string ImageUrl { get; set; }
 

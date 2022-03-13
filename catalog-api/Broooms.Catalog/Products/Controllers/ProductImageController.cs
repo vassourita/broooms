@@ -52,17 +52,19 @@ public class ProductImageController : ControllerBase
             );
         }
 
-        if (product.ImageUrl != null)
+        if (!string.IsNullOrWhiteSpace(product.ImageName))
         {
-            await _fileManager.DeleteFileAsync(product.ImageUrl);
+            await _fileManager.DeleteFileAsync(product.ImageName);
         }
 
+        var newImageName = $"product_img__{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
         var newImageUrl = await _fileManager.UploadFileAsync(
-            $"{Guid.NewGuid()}__{imageFile.FileName}",
+            newImageName,
             ReadStream(imageFile.OpenReadStream()),
             imageFile.ContentType
         );
-        product.ImageUrl = newImageUrl.AbsolutePath;
+        product.ImageName = newImageName;
+        product.ImageUrl = newImageUrl.AbsoluteUri;
 
         _dataContext.Update(product);
         await _dataContext.SaveChangesAsync();
@@ -70,7 +72,7 @@ public class ProductImageController : ControllerBase
         return Ok(product);
     }
 
-    public static byte[] ReadStream(Stream input)
+    private static byte[] ReadStream(Stream input)
     {
         var buffer = new byte[16 * 1024];
         using var ms = new MemoryStream();
