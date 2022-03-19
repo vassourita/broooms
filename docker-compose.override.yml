@@ -27,6 +27,6 @@ services:
     container_name: broooms_cart_db
     restart: always
     ports:
-      - 5201:5432
+      - 5201:6379
     volumes:
       - /usr/local/etc/redis
