@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "catalog-api", "catalog-api"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broooms.Catalog", "catalog-api\Broooms.Catalog\Broooms.Catalog.csproj", "{820DC4AE-BCA7-46B9-9ED9-F04F9A849351}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cart-api", "cart-api", "{01C88E24-1749-4613-A562-CD8269A524AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broooms.Cart", "cart-api\Broooms.Cart\Broooms.Cart.csproj", "{FB8C12E3-DE73-405D-AB81-8F7BC8A3CC5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{820DC4AE-BCA7-46B9-9ED9-F04F9A849351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{820DC4AE-BCA7-46B9-9ED9-F04F9A849351}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{820DC4AE-BCA7-46B9-9ED9-F04F9A849351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB8C12E3-DE73-405D-AB81-8F7BC8A3CC5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8C12E3-DE73-405D-AB81-8F7BC8A3CC5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8C12E3-DE73-405D-AB81-8F7BC8A3CC5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8C12E3-DE73-405D-AB81-8F7BC8A3CC5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{820DC4AE-BCA7-46B9-9ED9-F04F9A849351} = {9A2809BB-9B9F-44C1-8EE2-49B4772D5AFA}
+		{FB8C12E3-DE73-405D-AB81-8F7BC8A3CC5A} = {01C88E24-1749-4613-A562-CD8269A524AE}
 	EndGlobalSection
 EndGlobal
