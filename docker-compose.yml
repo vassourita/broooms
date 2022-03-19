@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/azure-storage/azurite
 
   broooms.catalog.db:
-    image: postgres:13
+    image: postgres:13-alpine
 
   broooms.cart.db:
-    image: redis:6
+    image: redis:6-alpine
