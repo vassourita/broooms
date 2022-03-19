@@ -22,3 +22,11 @@ services:
       - POSTGRES_DB=catalog_db
     volumes:
       - /var/lib/postgresql/data
+
+  broooms.cart.db:
+    container_name: broooms_cart_db
+    restart: always
+    ports:
+      - 5201:5432
+    volumes:
+      - /usr/local/etc/redis

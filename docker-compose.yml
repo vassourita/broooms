@@ -6,3 +6,6 @@ services:
 
   broooms.catalog.db:
     image: postgres:13
+
+  broooms.cart.db:
+    image: redis:6
