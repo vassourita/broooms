@@ -4,7 +4,7 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-191929?style=flat-square">
   <img alt="Stars" src="https://img.shields.io/github/stars/vassourita/broooms?style=flat-square">
   <img alt="Last Commit" src="https://img.shields.io/github/last-commit/vassourita/broooms?style=flat-square" />
-  <div><a href="#getting-started">Getting Started</a> • <a href="#application-overview">Application overview</a> • <a href="#features">Features</a> • <a href="#license">License</a></div>
+  <div><a href="#-getting-started">Getting Started</a> • <a href="#-application-overview">Application overview</a> • <a href="#-features">Features</a> • <a href="#-license">License</a></div>
 </div>
 <br>
 <br>
