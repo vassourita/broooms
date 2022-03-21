@@ -67,4 +67,28 @@ app.MapPut(
     .AllowAnonymous()
     .Produces<Cart>((int)HttpStatusCode.Created, contentType: "application/json");
 
+app.MapPost(
+    "/api/v1/carts/{userId:guid}/coupons/{code:string}",
+    ([FromServices] CartRepository repo, [FromRoute] Guid userId, [FromRoute] string code) =>
+    {
+        return;
+    }
+);
+
+app.MapDelete(
+    "/api/v1/carts/{userId:guid}/coupons",
+    ([FromServices] CartRepository repo, [FromRoute] Guid userId) =>
+    {
+        return;
+    }
+);
+
+app.MapPost(
+    "/api/v1/carts/{userId:guid}/checkout",
+    ([FromServices] CartRepository repo, [FromRoute] Guid userId) =>
+    {
+        return;
+    }
+);
+
 app.Run();
