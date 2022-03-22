@@ -9,7 +9,7 @@ services:
       - "10001:10001"
       - "10002:10002"
     volumes:
-      - /data
+      - azurite_volume:/data
 
   broooms.catalog.db:
     container_name: broooms_catalog_db
@@ -21,7 +21,7 @@ services:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=catalog_db
     volumes:
-      - /var/lib/postgresql/data
+      - catalog_db_volume:/var/lib/postgresql/data
 
   broooms.cart.db:
     container_name: broooms_cart_db
@@ -29,4 +29,16 @@ services:
     ports:
       - 5201:6379
     volumes:
-      - /usr/local/etc/redis
+      - cart_db_volume:/usr/local/etc/redis
+
+  broooms.auth.db:
+    container_name: broooms_auth_db
+    restart: always
+    ports:
+      - 5301:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=docker
+      - POSTGRES_DB=catalog_db
+    volumes:
+      - auth_db_volume:/var/opt/mssql/data

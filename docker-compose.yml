@@ -9,3 +9,12 @@ services:
 
   broooms.cart.db:
     image: redis:6-alpine
+
+  broooms.auth.db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+
+volumes:
+  azurite_volume:
+  catalog_db_volume:
+  cart_db_volume:
+  auth_db_volume:
