@@ -38,7 +38,6 @@ services:
       - 5301:1433
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=docker
-      - POSTGRES_DB=catalog_db
+      - SA_PASSWORD=Docker123!
     volumes:
-      - auth_db_volume:/var/opt/mssql/data
+      - auth_db_volume:/var/opt/mssql
